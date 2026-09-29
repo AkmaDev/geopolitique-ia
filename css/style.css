@@ -1,0 +1,86 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1f2937;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  padding: 12px 20px;
+  background: #111827;
+  color: #fff;
+}
+header h1 { margin: 0; font-size: 1.4rem; }
+header p  { margin: 4px 0 0; font-size: 0.9rem; color: #cbd5e1; }
+
+main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+#panneau {
+  width: 340px;
+  overflow-y: auto;
+  padding: 16px 20px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+}
+#panneau h2 { font-size: 1.05rem; margin: 0 0 8px; }
+#panneau h3 { font-size: 0.95rem; margin: 16px 0 6px; }
+#panneau section + section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+#panneau ul { padding-left: 18px; margin: 0; }
+#panneau li { margin-bottom: 6px; font-size: 0.9rem; line-height: 1.4; }
+#panneau p  { font-size: 0.92rem; line-height: 1.5; }
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.pastille {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge {
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.source a { color: #4f46e5; }
+
+#carte { flex: 1; }
+
+footer {
+  padding: 6px 20px;
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+}
+footer a { color: #4f46e5; }
+
+/* Sur téléphone : la carte en haut, le panneau en dessous */
+@media (max-width: 760px) {
+  body { height: auto; }
+  main { flex-direction: column-reverse; }
+  #carte { height: 55vh; }
+  #panneau { width: 100%; border-right: none; }
+}
