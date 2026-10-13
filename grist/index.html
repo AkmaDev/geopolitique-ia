@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Grist — custom view</title>
+
+  <!-- API des « custom widgets » de Grist : elle permet à cette page de lire le tableau -->
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 12px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      color: #1f2937;
+      background: #fff;
+    }
+    #aide {
+      display: none;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-left: 4px solid #4f46e5;
+      background: #eef2ff;
+      line-height: 1.5;
+    }
+    #barre { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+    #recherche { flex: 1; padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; font: inherit; }
+    #compteur { color: #6b7280; white-space: nowrap; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+    th { position: sticky; top: 0; background: #f3f4f6; font-weight: 600; }
+    tr:hover td { background: #f9fafb; }
+    #vide { padding: 20px; color: #6b7280; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="aide">
+    <strong>Mode démonstration.</strong> Cette page affiche ici des données fictives.
+    Pour la tester avec Grist : ajoutez un widget de type <em>Personnalisé</em> à votre page
+    Grist, collez l'adresse de cette page, puis choisissez l'accès <em>« Lire la table »</em>
+    et la table à afficher.
+  </div>
+
+  <div id="barre">
+    <input id="recherche" type="search" placeholder="Filtrer les lignes…" aria-label="Filtrer les lignes">
+    <span id="compteur"></span>
+  </div>
+
+  <table>
+    <thead><tr id="entetes"></tr></thead>
+    <tbody id="corps"></tbody>
+  </table>
+  <div id="vide" hidden>Aucune donnée à afficher.</div>
+
+  <script>
+    // Les lignes reçues de Grist (ou de la démonstration)
+    let lignes = [];
+
+    // Transformer une valeur Grist en texte lisible
+    function enTexte(valeur) {
+      if (valeur === null || valeur === undefined) return "";
+      if (Array.isArray(valeur)) return valeur.map(enTexte).join(", ");
+      if (typeof valeur === "object") return JSON.stringify(valeur);
+      return String(valeur);
+    }
+
+    // Colonnes à afficher : toutes celles du tableau, sauf l'identifiant interne « id »
+    function colonnes() {
+      const noms = new Set();
+      lignes.forEach(l => Object.keys(l).forEach(k => { if (k !== "id") noms.add(k); }));
+      return [...noms];
+    }
+
+    // Dessiner le tableau (on utilise textContent : aucune donnée n'est interprétée comme du HTML)
+    function afficher() {
+      const filtre = document.getElementById("recherche").value.trim().toLowerCase();
+      const cols = colonnes();
+
+      const entetes = document.getElementById("entetes");
+      entetes.replaceChildren(...cols.map(c => {
+        const th = document.createElement("th");
+        th.textContent = c;
+        return th;
+      }));
+
+      const visibles = lignes.filter(l =>
+        !filtre || cols.some(c => enTexte(l[c]).toLowerCase().includes(filtre))
+      );
+
+      const corps = document.getElementById("corps");
+      corps.replaceChildren(...visibles.map(l => {
+        const tr = document.createElement("tr");
+        cols.forEach(c => {
+          const td = document.createElement("td");
+          td.textContent = enTexte(l[c]);
+          tr.appendChild(td);
+        });
+        return tr;
+      }));
+
+      document.getElementById("compteur").textContent =
+        `${visibles.length} / ${lignes.length} ligne(s)`;
+      document.getElementById("vide").hidden = visibles.length > 0;
+    }
+
+    document.getElementById("recherche").addEventListener("input", afficher);
+
+    // Page ouverte dans Grist (dans un cadre) ou seule dans un onglet ?
+    const dansGrist = window.self !== window.top && typeof grist !== "undefined";
+
+    if (dansGrist) {
+      // 1. On prévient Grist qu'on est prêt et on demande à lire la table
+      grist.ready({ requiredAccess: "read table" });
+      // 2. Grist nous envoie toutes les lignes, puis à nouveau à chaque modification
+      grist.onRecords(records => {
+        lignes = records;
+        afficher();
+      });
+    } else {
+      // Mode démonstration : permet de voir la page sans Grist
+      document.getElementById("aide").style.display = "block";
+      lignes = [
+        { id: 1, Pays: "Taïwan",       Theme: "Semi-conducteurs",        Poids: 3 },
+        { id: 2, Pays: "Pays-Bas",     Theme: "Semi-conducteurs",        Poids: 2 },
+        { id: 3, Pays: "Kenya",        Theme: "Travail & données",       Poids: 1 },
+        { id: 4, Pays: "Union européenne", Theme: "Régulation & diplomatie", Poids: 3 }
+      ];
+      afficher();
+    }
+  </script>
+</body>
+</html>

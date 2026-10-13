@@ -33,9 +33,28 @@ Ce projet propose une **carte du monde interactive** pour rendre visibles ces ra
 - Une **fiche par pays** : résumé, faits clés, relations et lien pour aller plus loin.
 - Un affichage adapté au téléphone.
 
+## Versions
+
+| Page | Contenu |
+|---|---|
+| [`index0.html`](https://akmadev.github.io/geopolitique-ia/index0.html) | Version 1 : carte, filtres par thème, flux, fiches pays. |
+| [`index1.html`](https://akmadev.github.io/geopolitique-ia/index1.html) | Version 2 : tout ce qui précède, plus une **frise chronologique** (curseur d'année et liste d'événements), un menu « Aller à un pays », un compteur d'acteurs et des adresses partageables (`index1.html#taiwan`). |
+| [`grist/index.html`](https://akmadev.github.io/geopolitique-ia/grist/index.html) | Test d'une **custom view Grist** qui lit et affiche les lignes d'un tableau. |
+
+`index.html` reste identique à la version 1.
+
+## Tester la custom view Grist
+
+1. Dans Grist, ouvrir un document avec un tableau (par exemple les pays et leurs thèmes).
+2. Ajouter un widget à la page, de type **Personnalisé** (*Custom*).
+3. Coller l'adresse : `https://akmadev.github.io/geopolitique-ia/grist/index.html`
+4. Choisir le niveau d'accès **Lire la table** et la table à afficher.
+
+Le code utilise `grist.ready({ requiredAccess: "read table" })` pour demander l'accès, puis `grist.onRecords(...)`, qui renvoie toutes les lignes et se relance à chaque modification du tableau. Ouverte seule dans un onglet, la page affiche des données fictives.
+
 ## Pistes pour la suite
 
-- [ ] Une **frise chronologique** (2017 → aujourd'hui) pour voir la carte évoluer dans le temps.
+- [x] Une **frise chronologique** (2017 → aujourd'hui) pour voir la carte évoluer dans le temps (version 2, première étape : les événements viennent de `data/evenements.js`).
 - [ ] Colorer les pays entiers (carte choroplèthe) plutôt que des points.
 - [ ] Des **indicateurs chiffrés** : investissements, nombre de centres de données, part de la production de puces.
 - [ ] Des **sources précises** pour chaque fait (articles, rapports), avec la date de consultation.
@@ -45,10 +64,16 @@ Ce projet propose une **carte du monde interactive** pour rendre visibles ces ra
 ## Structure du code
 
 ```
-index.html      page principale
-css/style.css   mise en forme
-js/app.js       logique de la carte (affichage, filtres, fiches)
-data/pays.js    données : thèmes, pays, flux
+index.html            page principale (version 1)
+index0.html           version 1
+index1.html           version 2
+css/style.css         mise en forme (versions 1 et 2)
+css/style1.css        compléments de style pour la version 2
+js/app.js             logique de la carte, version 1
+js/app1.js            logique de la carte, version 2
+data/pays.js          données : thèmes, pays, flux
+data/evenements.js    événements datés de la frise (version 2)
+grist/index.html      test de custom view Grist
 ```
 
 ## Lancer le projet en local

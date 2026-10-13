@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Géopolitique de l'IA — carte interactive</title>
+  <meta name="description" content="Carte interactive des acteurs et des rapports de force géopolitiques à l'ère de l'intelligence artificielle.">
+
+  <!-- Leaflet : bibliothèque de cartographie -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Géopolitique de l'IA</h1>
+    <p>Qui fabrique les puces, qui entraîne les modèles, qui fixe les règles, qui fournit les ressources et le travail ?</p>
+  </header>
+
+  <main>
+    <aside id="panneau">
+      <section>
+        <h2>Filtrer par thème</h2>
+        <div id="filtres"></div>
+        <label class="option">
+          <input type="checkbox" id="afficher-flux" checked> Afficher les flux entre pays
+        </label>
+      </section>
+
+      <section id="fiche">
+        <h2>Cliquez sur un pays</h2>
+        <p>Chaque point représente un acteur de la géopolitique de l'IA. Sa taille indique son poids dans le domaine ; sa couleur, son thème principal.</p>
+      </section>
+    </aside>
+
+    <div id="carte" aria-label="Carte du monde"></div>
+  </main>
+
+  <footer>
+    Projet individuel — M1 Humanités numériques (NET), Université Paris 8 ·
+    Première version, données indicatives (sept. 2026) ·
+    <a href="https://github.com/AkmaDev/geopolitique-ia">Code source</a> ·
+    <a href="index1.html">Voir la version 2</a>
+  </footer>
+
+  <script src="data/pays.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

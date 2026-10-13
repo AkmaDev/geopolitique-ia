@@ -1,0 +1,60 @@
+/* Compléments de style pour la version 2 (index1.html).
+   Ce fichier s'ajoute à style.css, qui reste inchangé pour la version 1. */
+
+header h1 .version {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  vertical-align: middle;
+  color: #111827;
+  background: #fbbf24;
+  border-radius: 999px;
+}
+
+#choix-pays,
+#annee {
+  width: 100%;
+}
+#choix-pays {
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+}
+
+#panneau .discret { margin: 8px 0 0; font-size: 0.8rem; color: #6b7280; }
+
+/* Frise chronologique */
+#evenements {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+#evenements li { margin-bottom: 4px; }
+#evenements button {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 8px;
+  text-align: left;
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: inherit;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#evenements button:hover,
+#evenements button:focus-visible { background: #f3f4f6; border-color: #d1d5db; }
+#evenements .annee { flex: none; font-weight: 700; color: #4f46e5; }
+#evenements .courant button { background: #fffbeb; border-color: #fbbf24; }
+
+/* Chronologie dans la fiche d'un pays */
+.chrono li strong { color: #4f46e5; }

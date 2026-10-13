@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Géopolitique de l'IA — carte interactive (version 2)</title>
+  <meta name="description" content="Carte interactive des acteurs et des rapports de force géopolitiques à l'ère de l'intelligence artificielle, avec frise chronologique.">
+
+  <!-- Leaflet : bibliothèque de cartographie -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style1.css">
+</head>
+<body>
+  <header>
+    <h1>Géopolitique de l'IA <span class="version">version 2</span></h1>
+    <p>Qui fabrique les puces, qui entraîne les modèles, qui fixe les règles, qui fournit les ressources et le travail ?</p>
+  </header>
+
+  <main>
+    <aside id="panneau">
+      <section>
+        <h2>Filtrer par thème</h2>
+        <div id="filtres"></div>
+        <label class="option">
+          <input type="checkbox" id="afficher-flux" checked> Afficher les flux entre pays
+        </label>
+      </section>
+
+      <section>
+        <h2>Aller à un pays</h2>
+        <select id="choix-pays" aria-label="Choisir un pays">
+          <option value="">— Choisir —</option>
+        </select>
+        <p id="compteur" class="discret"></p>
+      </section>
+
+      <section>
+        <h2>Frise chronologique</h2>
+        <label for="annee" class="option">
+          Jusqu'en <output id="annee-affichee"></output>
+        </label>
+        <input type="range" id="annee" step="1">
+        <ul id="evenements"></ul>
+      </section>
+
+      <section id="fiche">
+        <h2>Cliquez sur un pays</h2>
+        <p>Chaque point représente un acteur de la géopolitique de l'IA. Sa taille indique son poids dans le domaine ; sa couleur, son thème principal.</p>
+      </section>
+    </aside>
+
+    <div id="carte" aria-label="Carte du monde"></div>
+  </main>
+
+  <footer>
+    Projet individuel — M1 Humanités numériques (NET), Université Paris 8 ·
+    Version 2, données indicatives (oct. 2026) ·
+    <a href="index0.html">Version 1</a> ·
+    <a href="grist/index.html">Test Grist</a> ·
+    <a href="https://github.com/AkmaDev/geopolitique-ia">Code source</a>
+  </footer>
+
+  <script src="data/pays.js"></script>
+  <script src="data/evenements.js"></script>
+  <script src="js/app1.js"></script>
+</body>
+</html>
