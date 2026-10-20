@@ -82,6 +82,6 @@ Il n'y a rien à installer : ouvrez `index.html` dans un navigateur.
 
 ## Crédits
 
-- Fond de carte : © OpenStreetMap, © CARTO
+- Fond de carte : © OpenStreetMap
 - Bibliothèque : [Leaflet](https://leafletjs.com/)
 - Les données de cette première version sont indicatives et restent à vérifier et à sourcer précisément.

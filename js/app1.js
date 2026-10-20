@@ -10,9 +10,9 @@
 // 1. Création de la carte
 const carte = L.map("carte", { worldCopyJump: true, minZoom: 2 }).setView([30, 20], 2);
 
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: "abcd",
+// Fond de carte OpenStreetMap (gratuit, sans clé). CARTO demande désormais une clé d'API.
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   maxZoom: 8
 }).addTo(carte);
 
