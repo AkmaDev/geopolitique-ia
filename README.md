@@ -39,9 +39,20 @@ Ce projet propose une **carte du monde interactive** pour rendre visibles ces ra
 |---|---|
 | [`index0.html`](https://akmadev.github.io/geopolitique-ia/index0.html) | Version 1 : carte, filtres par thème, flux, fiches pays. |
 | [`index1.html`](https://akmadev.github.io/geopolitique-ia/index1.html) | Version 2 : tout ce qui précède, plus une **frise chronologique** (curseur d'année et liste d'événements), un menu « Aller à un pays », un compteur d'acteurs et des adresses partageables (`index1.html#taiwan`). |
+| [`index2.html`](https://akmadev.github.io/geopolitique-ia/index2.html) | Version 3 : **atlas des points de bascule** sur un **globe** qu'on fait tourner à la souris. 22 points, 7 catégories, et une fiche où l'on écrit d'abord son hypothèse avant de révéler l'analyse vérifiée, question par question. |
 | [`grist/index.html`](https://akmadev.github.io/geopolitique-ia/grist/index.html) | Test d'une **custom view Grist** qui lit et affiche les lignes d'un tableau. |
 
 `index.html` reste identique à la version 1.
+
+### La version 3 : élargir aux points de bascule
+
+La version 3 élargit la question. L'IA n'est qu'un cas d'un phénomène plus général : des lieux ou des systèmes dont le pouvoir vient d'une **position de contrôle**, pas d'une abondance de ressources (un détroit, une étape de raffinage, une monnaie, une norme technique). Les enjeux de l'IA y figurent : Taïwan et les semi-conducteurs, le raffinage des terres rares, les data centers de Virginie du Nord, les talents en IA de la Silicon Valley.
+
+Principe pédagogique : **réfléchir avant de lire**. Chaque fiche propose la même grille de 10 questions (ressources réelles, position, qui a intérêt, test de rupture, asymétrie, contre-stratégies, etc.). On écrit son hypothèse, puis on révèle l'analyse et on compare. Pas de score, pas de compte : la progression et les hypothèses restent dans le navigateur (`localStorage`).
+
+Règle de rigueur : aucune réponse n'est inventée. Une information non trouvée avec une source fiable est affichée « Non confirmé — à vérifier ». Pour l'instant, 3 fiches sont documentées (Taïwan, terres rares, Centrafrique) ; les 19 autres sont placées sur le globe mais restent à documenter.
+
+Techniquement, le globe est une projection orthographique de [d3-geo](https://d3js.org/d3-geo), recalculée à chaque mouvement et dessinée en SVG. Pas de moteur 3D.
 
 ## Tester la custom view Grist
 
@@ -67,12 +78,17 @@ Le code utilise `grist.ready({ requiredAccess: "read table" })` pour demander l'
 index.html            page principale (version 1)
 index0.html           version 1
 index1.html           version 2
+index2.html           version 3 (globe des points de bascule)
 css/style.css         mise en forme (versions 1 et 2)
 css/style1.css        compléments de style pour la version 2
+css/style2.css        mise en forme de la version 3
 js/app.js             logique de la carte, version 1
 js/app1.js            logique de la carte, version 2
+js/app2.js            logique du globe et des fiches, version 3
 data/pays.js          données : thèmes, pays, flux
 data/evenements.js    événements datés de la frise (version 2)
+data/points.js        données de la version 3 : catégories, 10 questions, 22 points
+data/countries-110m.json  fond de carte du globe (world-atlas, Natural Earth)
 grist/index.html      test de custom view Grist
 ```
 
@@ -80,8 +96,11 @@ grist/index.html      test de custom view Grist
 
 Il n'y a rien à installer : ouvrez `index.html` dans un navigateur.
 
+La version 3 charge son fond de carte avec `fetch`, ce que le navigateur bloque quand on ouvre le fichier directement. Lancez un petit serveur dans le dossier du projet, par exemple `python -m http.server`, puis ouvrez http://localhost:8000/index2.html.
+
 ## Crédits
 
-- Fond de carte : © OpenStreetMap
-- Bibliothèque : [Leaflet](https://leafletjs.com/)
+- Fond de carte : © OpenStreetMap (versions 1 et 2) ; Natural Earth via [world-atlas](https://github.com/topojson/world-atlas) (version 3)
+- Bibliothèques : [Leaflet](https://leafletjs.com/) (versions 1 et 2) ; [d3](https://d3js.org/) et [topojson-client](https://github.com/topojson/topojson-client) (version 3)
+- Polices de la version 3 : Instrument Serif, Newsreader, IBM Plex Mono (Google Fonts)
 - Les données de cette première version sont indicatives et restent à vérifier et à sourcer précisément.

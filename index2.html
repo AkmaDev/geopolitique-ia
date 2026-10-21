@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Points de bascule — atlas interactif (version 3)</title>
+  <meta name="description" content="Globe interactif des points de bascule géopolitiques : formuler son hypothèse, puis révéler l'analyse vérifiée.">
+
+  <!-- Polices : Instrument Serif (titres), Newsreader (lecture), IBM Plex Mono (labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+  <!-- d3 : projection du globe et tracés ; topojson : lecture du fond de carte -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+
+  <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+  <div class="atlas">
+
+    <!-- Zone carte : le globe et les éléments superposés -->
+    <div class="carte" id="carte">
+      <svg id="globe" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="Globe des points de bascule">
+        <g id="zoom">
+          <path id="sphere" class="sphere"></path>
+          <path id="graticule" class="graticule"></path>
+          <g id="pays"></g>
+          <g id="marqueurs"></g>
+        </g>
+      </svg>
+
+      <div class="tooltip" id="tooltip" hidden>
+        <div class="tooltip-cat" id="tooltip-cat"></div>
+        <div class="tooltip-nom" id="tooltip-nom"></div>
+      </div>
+
+      <div class="titre">
+        <div class="surtitre">Atlas · v1</div>
+        <h1>Points de bascule</h1>
+        <p class="accroche">Là où le pouvoir ne vient pas de ce qu'on possède, mais de ce qu'on laisse passer.</p>
+      </div>
+
+      <nav class="versions" aria-label="Versions du projet">
+        <a href="index0.html">Version 1</a> ·
+        <a href="index1.html">Version 2</a> ·
+        <span>Version 3</span> ·
+        <a href="https://github.com/AkmaDev/geopolitique-ia">Code</a>
+      </nav>
+
+      <div class="legende atlas-sombre" id="legende"></div>
+
+      <div class="controles" id="controles">
+        <div class="aide" id="aide">zoom ×1.0 · glisser = rotation</div>
+        <div class="boutons">
+          <button type="button" id="zoom-moins" aria-label="Dézoomer">–</button>
+          <button type="button" id="zoom-plus" aria-label="Zoomer">+</button>
+          <button type="button" id="recadrer" class="recadrer">Recadrer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fiche du point sélectionné -->
+    <aside class="fiche atlas-papier" id="fiche" hidden></aside>
+
+  </div>
+
+  <script src="data/points.js"></script>
+  <script src="js/app2.js"></script>
+</body>
+</html>
